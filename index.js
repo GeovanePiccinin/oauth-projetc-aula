@@ -67,8 +67,12 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-app.get("/login", (req, res) => {
+app.get("/", (req, res) => {
   res.render("pages/index.ejs");
+});
+
+app.get("/login", (req, res) => {
+  res.render("pages/login.ejs");
 });
 
 app.get("logout", (req, res) => {
