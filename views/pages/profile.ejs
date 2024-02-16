@@ -32,28 +32,63 @@
             <h3 class="text-danger">
               <span class="fa fa-google-plus"></span> Google
             </h3>
-            <% } %> <%if (profile == 'facebook') { %>
+            <% } %> <%if (profile == 'github') { %>
             <h3 class="text-primary">
-              <span class="fa fa-facebook"></span> facebook
+              <span class="fa fa-github"></span> Github
             </h3>
-            <% } %> <%if (profile == 'linkedin') { %>
-            <h3 class="text-primary">
-              <span class="fa fa-linkedin"></span> linkedin
-            </h3>
-            <% } %> <%if (profile == 'twitter') { %>
-            <h3 class="text-primary">
-              <span class="fa fa-twitter"></span> twitter
-            </h3>
-            <% } %>
+            <% } %> <%if (profile == 'google') { %>
             <p>
               <strong>email</strong>: <%= email %><br />
               <strong>name</strong>: <%= name %><br />
               <strong>pic</strong>:
               <img src="<%=pic%>" width="100" height="100" alt="" />
             </p>
+            <% } %> <%if (profile == 'github') { %>
+            <p>
+              <strong>username</strong>: <%= username %><br />
+              <strong>profileUrl</strong>: <%= profileUrl %><br />
+            </p>
+            <% } %>
           </div>
         </div>
       </div>
     </div>
+    <script>
+      const loadHotelsButton = document.getElementById("hotels-button");
+
+      loadHotelsButton.addEventListener("click", () => {
+        function show(data) {
+          const ul = document.getElementById("hotels-list");
+          const list = document.createDocumentFragment();
+
+          data.map(function (hotel) {
+            let li = document.createElement("li");
+            let title = document.createElement("h1");
+            let body = document.createElement("p");
+            title.innerHTML = `${hotel.name}`;
+            body.innerHTML = `${hotel.address} - ${hotel.phone} - ${hotel.rating}`;
+
+            li.appendChild(title);
+            li.appendChild(body);
+            list.appendChild(li);
+          });
+
+          ul.appendChild(list);
+        }
+
+        fetch("http://localhost:3000/api/v1/hotels", {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + "token-here",
+          },
+        })
+          .then((response) => response.json())
+          .then((responseData) => {
+            show(responseData);
+          });
+      });
+    </script>
   </body>
 </html>
