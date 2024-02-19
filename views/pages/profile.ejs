@@ -53,42 +53,5 @@
         </div>
       </div>
     </div>
-    <script>
-      const loadHotelsButton = document.getElementById("hotels-button");
-
-      loadHotelsButton.addEventListener("click", () => {
-        function show(data) {
-          const ul = document.getElementById("hotels-list");
-          const list = document.createDocumentFragment();
-
-          data.map(function (hotel) {
-            let li = document.createElement("li");
-            let title = document.createElement("h1");
-            let body = document.createElement("p");
-            title.innerHTML = `${hotel.name}`;
-            body.innerHTML = `${hotel.address} - ${hotel.phone} - ${hotel.rating}`;
-
-            li.appendChild(title);
-            li.appendChild(body);
-            list.appendChild(li);
-          });
-
-          ul.appendChild(list);
-        }
-
-        fetch("http://localhost:3000/api/v1/hotels", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + "token-here",
-          },
-        })
-          .then((response) => response.json())
-          .then((responseData) => {
-            show(responseData);
-          });
-      });
-    </script>
   </body>
 </html>
